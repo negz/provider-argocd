@@ -3,7 +3,7 @@ FROM gcr.io/distroless/static@sha256:1f580b0a1922c3e54ae15b0758b5747b260bd99d39d
 ARG TARGETOS
 ARG TARGETARCH
 
-ADD bin/$TARGETOS\_$TARGETARCH/provider /usr/local/bin/crossplane-argocd-provider
+ADD bin/$TARGETOS\_$TARGETARCH/provider-argocd-repositories /usr/local/bin/crossplane-argocd-provider
 
 USER 65532
 ENTRYPOINT ["crossplane-argocd-provider"]

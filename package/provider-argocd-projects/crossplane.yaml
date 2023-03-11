@@ -1,7 +1,7 @@
 apiVersion: meta.pkg.crossplane.io/v1
 kind: Provider
 metadata:
-  name: provider-argocd
+  name: provider-argocd-projects
   annotations:
     meta.crossplane.io/maintainer: Crossplane Maintainers <info@crossplane.io>
     meta.crossplane.io/source: github.com/crossplane-contrib/provider-argocd
@@ -18,3 +18,7 @@ metadata:
       the [crossplane-contrib/provider-argocd](https://github.com/crossplane-contrib/provider-argocd)
       repo.
     friendly-name.meta.crossplane.io: Provider Argo CD
+
+spec:
+  dependsOn:
+  - provider: xpkg.upbound.io/negz/provider-argocd-config

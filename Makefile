@@ -33,7 +33,7 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider
+GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider-argocd-config $(GO_PROJECT)/cmd/provider-argocd-cluster $(GO_PROJECT)/cmd/provider-argocd-projects $(GO_PROJECT)/cmd/provider-argocd-repositories
 GO_LDFLAGS += -X $(GO_PROJECT)/pkg/version.Version=$(VERSION)
 GO_SUBDIRS += cmd pkg apis
 GO111MODULE = on
@@ -49,22 +49,25 @@ UP_CHANNEL = stable
 # ====================================================================================
 # Setup Images
 
-IMAGES = provider-argocd
+IMAGES = provider-argocd-config provider-argocd-cluster provider-argocd-projects provider-argocd-repositories
 -include build/makelib/imagelight.mk
 
 # ====================================================================================
 # Setup XPKG
 
-XPKG_REG_ORGS ?= xpkg.upbound.io/crossplane-contrib index.docker.io/crossplanecontrib
+XPKG_REG_ORGS ?= xpkg.upbound.io/negz index.docker.io/negz
 # NOTE(hasheddan): skip promoting on xpkg.upbound.io as channel tags are
 # inferred.
-XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/crossplane-contrib
-XPKGS = provider-argocd
+XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/negz
+XPKGS = provider-argocd-config provider-argocd-cluster provider-argocd-projects provider-argocd-repositories
 -include build/makelib/xpkg.mk
 
 # NOTE(hasheddan): we force image building to happen prior to xpkg build so that
 # we ensure image is present in daemon.
-xpkg.build.provider-argocd: do.build.images
+xpkg.build.provider-argocd-config: do.build.images
+xpkg.build.provider-argocd-cluster: do.build.images
+xpkg.build.provider-argocd-projects: do.build.images
+xpkg.build.provider-argocd-repositories: do.build.images
 
 # ====================================================================================
 # Targets

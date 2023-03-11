@@ -27,7 +27,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 
 	"github.com/crossplane-contrib/provider-argocd/apis"
-	"github.com/crossplane-contrib/provider-argocd/pkg/controller"
+	"github.com/crossplane-contrib/provider-argocd/pkg/controller/config"
 )
 
 func main() {
@@ -61,6 +61,6 @@ func main() {
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add argocd APIs to scheme")
-	kingpin.FatalIfError(controller.Setup(mgr, log), "Cannot setup argocd controllers")
+	kingpin.FatalIfError(config.Setup(mgr, log), "Cannot setup argocd controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
